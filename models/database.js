@@ -1,8 +1,9 @@
-const pg = require('pg');
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/relay';
+var promise = require("bluebird");
+var options = {
+  //initialization options
+  promiseLib: promise
+}
 
-const client = new pg.Client(connectionString);
-client.connect();
-const query = client.query(
-      'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-query.on('end', () => { client.end();  });
+const pgp = require('pg-promise')(options);
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/relay';
+const db = new pgp(connectionString);

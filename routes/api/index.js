@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const pg = require('pg');
-const path = require('path');
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/relay';
+
+var db = require('./users.js');
 
 router.get('/', function(req, res, next){
   res.render('index', {title: 'API'});
 });
+
+router.get('/users/signUp', db.signUp);
 
 module.exports = router;
